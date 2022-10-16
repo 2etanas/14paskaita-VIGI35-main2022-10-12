@@ -1,9 +1,14 @@
 <?php 
 
 trait Filter {
+    
+    protected  $filterData = []; 
+    
+    
     public function filter($data, $filter ) {
 
         //stulpelio pavadinimas pagal kuri filtruojam
+       
 
         $filterCollumn = "visi";
     
@@ -23,4 +28,18 @@ trait Filter {
         //filtruojame duomenis pagal miesta
         return $data;
     }
+
+    public function getFilterCollumnData($collumn) {
+        $this->readFile();
+        $filterElements= $this->data;
+        foreach ($filterElements as $filterElement) {
+            $this->filterData[] = $filterElement[$collumn];
+        }
+        
+        $this->filterData=array_unique($this->filterData);
+
+        return $this->filterData;
+    
+    }
+
 }

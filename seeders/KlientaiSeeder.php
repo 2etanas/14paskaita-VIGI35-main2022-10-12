@@ -2,57 +2,40 @@
 
 include "../utilities/FileManger.php";
 
-echo "labas";
-if(!is_file("klientai.json")){
-    touch("klientai.json");
+echo "<h1>KLIENTAI2.json kurimas ir seedinimas</h1>";
 
-}
 class ClientSeeder {
     use FileManager;
     public $pavardeX = "Bar";
     public $vardasX = "Povilas";
-
-    public function seedAClient() {
+    public function createAClient() {
         $skaicius = rand(111,999);
-         $this->naujasKlientas = array(
+         $this->naujasDemuo = array(
             "vardas" => $this->vardasX.$skaicius,
             "pavarde"=> $this->pavardeX.$skaicius,
             "amzius" => rand(10,99),
             "miestas"=>"Kaunas"
          );
-         $this->data[] = $this->naujasKlientas;
-        // writeJson("klientai.json", $this->data);
+         $this->data[] = $this->naujasDemuo;
         return $this->data;
         }
-        // public function readAClient($file) {
-        //     public $json = file_get_contents($file);
-        //    public $result = json_decode($json, true);
-        //     return $this->result;
         
-        // }
-        // public function writeAClient($file) {
-        //     $json = json_encode($array);
-        //     file_put_contents($file, $json);
-        // }
-        
-
-    
-
-
-    
+    public function    seedAClient() {
+        if(!is_file("../klientai2.json")){
+            touch("../klientai2.json");
+        }
+        for($i = 0; $i<100; $i++){
+            $this->file = "../klientai2.json";
+            $this->readFile("../klientai2.json");
+            $this->createAClient();
+            var_dump($this->naujasDemuo);
+            $this->writeFile($this->data);
+            }
     }
+  }
 
 
 $SeederC = new ClientSeeder();
-
-for($i = 0; $i<100; $i++){
-$SeederC->file = "klientai.json";
-$SeederC->readFile("klientai.json");
 $SeederC->seedAClient();
-var_dump($SeederC->naujasKlientas);
-$SeederC->writeFile($SeederC->data);
-}
-
-
 
 ?>
